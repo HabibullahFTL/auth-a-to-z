@@ -1,8 +1,8 @@
 'use client';
 
-import { signUp } from '@/actions/sign-up';
+import { registration } from '@/actions/registration';
 import { signUpValidationSchema } from '@/app/validation/auth-schemas';
-import AuthCardWrapper from '@/components/auth/auth-card-wrapper';
+import AuthCard from '@/components/auth/auth-card';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -13,13 +13,19 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
+import { DEFAULT_RESEND_VERIFICATION_PAGE } from '@/lib/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const SignUpPage = () => {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
+
+  const { toast } = useToast();
 
   const formMethods = useForm<z.infer<typeof signUpValidationSchema>>({
     defaultValues: {
@@ -33,19 +39,37 @@ const SignUpPage = () => {
   const onSubmit = (values: z.infer<typeof signUpValidationSchema>) => {
     if (isPending) return;
 
+    // URL origin
+    const urlOrigin = location.origin;
+
     startTransition(() => {
-      signUp(values).then((res) => {
-        console.log({ res });
+      registration(values, urlOrigin).then((res) => {
+        if (res?.success) {
+          toast({
+            variant: 'default',
+            title: res?.message || 'Successfully created a user!',
+            duration: 5000,
+          });
+          formMethods.reset();
+          if (res?.success) {
+            router.replace(DEFAULT_RESEND_VERIFICATION_PAGE);
+          }
+        } else {
+          toast({
+            variant: 'destructive',
+            title: res?.message || 'Failed to create a user!',
+          });
+        }
       });
     });
   };
 
   return (
     <div className="flex flex-col h-full justify-center items-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-400 to-sky-800">
-      <AuthCardWrapper
+      <AuthCard
         title="Sign Up"
         subTitle="Create you account"
-        backButtonLabel="Already have an account?"
+        backButtonLabel="Already have an account? Login"
         backButtonHref="/login"
       >
         <Form {...formMethods}>
@@ -115,7 +139,7 @@ const SignUpPage = () => {
             </Button>
           </form>
         </Form>
-      </AuthCardWrapper>
+      </AuthCard>
     </div>
   );
 };

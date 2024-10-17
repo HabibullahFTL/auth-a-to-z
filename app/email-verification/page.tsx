@@ -1,0 +1,26 @@
+import { auth } from '@/lib/auth/auth';
+import { DEFAULT_LOGIN_PAGE } from '@/lib/routes';
+import { redirect } from 'next/navigation';
+import Verification from '../../components/verification';
+
+interface IProps {
+  searchParams: {
+    token?: string;
+    'error-code'?: string;
+    'success-code'?: string;
+  };
+}
+
+const EmailVerificationPage = async ({ searchParams }: IProps) => {
+  const token = searchParams?.token;
+
+  const session = await auth();
+
+  if (!token && !session) {
+    redirect(DEFAULT_LOGIN_PAGE);
+  }
+
+  return <Verification token={token} />;
+};
+
+export default EmailVerificationPage;
