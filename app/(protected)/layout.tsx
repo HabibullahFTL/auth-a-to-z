@@ -1,4 +1,4 @@
-import Verification from '@/components/verification';
+import Verification from '@/components/auth/verification';
 import { auth } from '@/lib/auth/auth';
 import { ReactNode } from 'react';
 

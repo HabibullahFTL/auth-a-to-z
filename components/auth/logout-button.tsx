@@ -1,7 +1,7 @@
 'use client';
+import { Button } from '@/components/ui/button';
 import { signOut } from 'next-auth/react';
 import { ReactNode } from 'react';
-import { Button } from '../ui/button';
 
 interface IProps {
   children: ReactNode;

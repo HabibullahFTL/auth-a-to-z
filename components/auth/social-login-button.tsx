@@ -1,6 +1,6 @@
+import { Button } from '@/components/ui/button';
 import { signIn } from 'next-auth/react';
 import { IconType } from 'react-icons/lib';
-import { Button } from '../ui/button';
 
 interface IProps {
   icon: IconType;

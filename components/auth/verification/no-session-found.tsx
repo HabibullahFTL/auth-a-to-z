@@ -1,8 +1,8 @@
 'use client';
 
+import Loader from '@/components/common/loader';
 import { signOut } from 'next-auth/react';
 import { useEffect } from 'react';
-import Loader from '../common/loader';
 
 const NoSessionFound = () => {
   useEffect(() => {

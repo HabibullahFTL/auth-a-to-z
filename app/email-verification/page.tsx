@@ -1,7 +1,7 @@
+import Verification from '@/components/auth/verification';
 import { auth } from '@/lib/auth/auth';
 import { DEFAULT_LOGIN_PAGE } from '@/lib/routes';
 import { redirect } from 'next/navigation';
-import Verification from '../../components/verification';
 
 interface IProps {
   searchParams: {
