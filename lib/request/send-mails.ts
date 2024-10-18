@@ -1,3 +1,4 @@
+import { ResetPasswordRequestEmailTemplate } from '@/email-templates/reset-password-email-template';
 import { User } from '@prisma/client';
 import { Resend } from 'resend';
 import { v4 as uuid } from 'uuid';
@@ -5,7 +6,7 @@ import { VerificationEmailTemplate } from '../../email-templates/verification-em
 import siteConfig from '../data/site-configs';
 import { generateResponse } from './generate-response';
 
-interface IProps {
+interface IVerificationProps {
   urlOrigin: string;
   user: Partial<User>;
   verification: {
@@ -13,17 +14,24 @@ interface IProps {
     code: string;
   };
 }
+interface IResetPasswordRequestProps {
+  urlOrigin: string;
+  user: Partial<User>;
+  verification: {
+    token: string;
+  };
+}
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resendMailService = new Resend(process.env.RESEND_API_KEY);
 
 export const sendVerificationEmail = async ({
   user,
   verification,
   urlOrigin,
-}: IProps) => {
+}: IVerificationProps) => {
   const confirmationLink = `${urlOrigin}/email-verification?token=${verification?.token}`;
 
-  const response = await resend.emails.send({
+  const response = await resendMailService.emails.send({
     from: `${siteConfig?.name} <${siteConfig?.fromEmail}>`,
     replyTo: siteConfig?.email,
     to: [user?.email || ''], // There can be pass an array of emails like ['abc@gmail.com', 'def@gmail.com'] or a single email 'abc@gmail.com
@@ -47,4 +55,34 @@ export const sendVerificationEmail = async ({
   }
 
   return generateResponse({ success: true, code: 'EmailVerificationSent' });
+};
+
+export const sendResetPasswordRequestEmail = async ({
+  user,
+  verification,
+  urlOrigin,
+}: IResetPasswordRequestProps) => {
+  const confirmationLink = `${urlOrigin}/reset-password?token=${verification?.token}`;
+
+  const response = await resendMailService.emails.send({
+    from: `${siteConfig?.name} <${siteConfig?.fromEmail}>`,
+    replyTo: siteConfig?.email,
+    to: [user?.email || ''], // There can be pass an array of emails like ['abc@gmail.com', 'def@gmail.com'] or a single email 'abc@gmail.com
+    subject: `Reset your password - ${siteConfig?.name}`,
+    headers: {
+      'X-Entity-Ref-ID': uuid(), // This will prevent threading in gmail though we send multiple email with same title
+    },
+    react: ResetPasswordRequestEmailTemplate({
+      verification: {
+        link: confirmationLink,
+      },
+      company: siteConfig,
+    }),
+  });
+
+  if (response?.error) {
+    return generateResponse({ code: 'ResetPasswordRequestFailed' });
+  }
+
+  return generateResponse({ success: true, code: 'ResetPasswordRequestSent' });
 };

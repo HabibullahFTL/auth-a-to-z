@@ -1,4 +1,4 @@
-import { loginValidationSchema } from '@/app/validation/auth-schemas';
+import { loginValidationSchema } from '@/lib/validation/auth-schemas';
 import * as bcrypt from 'bcryptjs';
 import { AuthError, type NextAuthConfig } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';

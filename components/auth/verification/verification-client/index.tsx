@@ -104,6 +104,7 @@ const VerificationClient = ({ email, token }: IProps) => {
     }
   }, [email, router, successCode]);
 
+  // After verifying email showing success message
   if (successCode) {
     return (
       <div className="space-y-3">

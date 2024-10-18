@@ -14,6 +14,18 @@ const apiAuthPrefix = '/api/auth';
 const DEFAULT_LOGIN_PAGE = '/login';
 
 /**
+ * The default redirect path for the forget password page.
+ * @type {string}
+ */
+const DEFAULT_FORGET_PASSWORD_PAGE = '/forget-password';
+
+/**
+ * The default redirect path for the reset password page.
+ * @type {string}
+ */
+const DEFAULT_RESET_PASSWORD_PAGE = '/reset-password';
+
+/**
  * The default redirect path for the signup page.
  * @type {string}
  */
@@ -43,7 +55,12 @@ const publicRoutes: string[] = ['/', '/test', DEFAULT_RESEND_VERIFICATION_PAGE];
  * Logged-in users will be redirected to the "/settings" page from these routes.
  * @type {string[]}
  */
-const authRoutes: string[] = [DEFAULT_LOGIN_PAGE, DEFAULT_SIGNUP_PAGE];
+const authRoutes: string[] = [
+  DEFAULT_SIGNUP_PAGE,
+  DEFAULT_LOGIN_PAGE,
+  DEFAULT_FORGET_PASSWORD_PAGE,
+  DEFAULT_RESET_PASSWORD_PAGE,
+];
 
 /**
  * The array of routes for email verification.
@@ -55,8 +72,10 @@ const emailVerificationRoutes: string[] = [DEFAULT_RESEND_VERIFICATION_PAGE];
 export {
   // Default page links
   DEFAULT_AFTER_LOGIN_PAGE,
+  DEFAULT_FORGET_PASSWORD_PAGE,
   DEFAULT_LOGIN_PAGE,
   DEFAULT_RESEND_VERIFICATION_PAGE,
+  DEFAULT_RESET_PASSWORD_PAGE,
   DEFAULT_SIGNUP_PAGE,
 
   // API route prefix

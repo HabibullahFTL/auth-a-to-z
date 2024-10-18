@@ -1,10 +1,10 @@
 'use server';
 
-import { loginValidationSchema } from '@/app/validation/auth-schemas';
 import { signIn } from '@/lib/auth/auth';
 import { errorMessages } from '@/lib/handlers/default-messages';
 import { getErrorMessageByCode } from '@/lib/handlers/generate-message';
 import { generateResponse } from '@/lib/request/generate-response';
+import { loginValidationSchema } from '@/lib/validation/auth-schemas';
 import { AuthError } from 'next-auth';
 import { z } from 'zod';
 

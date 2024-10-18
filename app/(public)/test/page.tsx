@@ -1,13 +1,12 @@
 'use client';
-import { VerificationEmailTemplate } from '@/email-templates/verification-email-template';
+import { ResetPasswordRequestEmailTemplate } from '@/email-templates/reset-password-email-template';
 import siteConfig from '@/lib/data/site-configs';
 
 const TestPage = () => {
   return (
-    <VerificationEmailTemplate
+    <ResetPasswordRequestEmailTemplate
       company={siteConfig}
       verification={{
-        code: 'kkk',
         link: 'https://www.habibullahftl.com',
       }}
     />

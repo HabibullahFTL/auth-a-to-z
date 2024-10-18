@@ -14,6 +14,7 @@ interface IProps {
   backButtonLabel: string;
   backButtonHref: string;
   children: ReactNode;
+  hideSocialLogin?: boolean;
 }
 
 const AuthCard = ({
@@ -21,6 +22,7 @@ const AuthCard = ({
   subTitle,
   backButtonLabel,
   backButtonHref,
+  hideSocialLogin,
   children,
 }: IProps) => {
   return (
@@ -32,10 +34,12 @@ const AuthCard = ({
       <div className="py-2">{children}</div>
 
       {/* Social logins - [ OAuth Provider Login ] */}
-      <div className="grid grid-cols-2 gap-2">
-        <SocialLoginButton icon={FcGoogle} provider="google" />
-        <SocialLoginButton icon={FaGithub} provider="github" />
-      </div>
+      {!hideSocialLogin && (
+        <div className="grid grid-cols-2 gap-2">
+          <SocialLoginButton icon={FcGoogle} provider="google" />
+          <SocialLoginButton icon={FaGithub} provider="github" />
+        </div>
+      )}
 
       {/* Card bottom content */}
       <div className="">

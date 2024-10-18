@@ -1,6 +1,5 @@
 'use client';
 import { login } from '@/actions/login';
-import { loginValidationSchema } from '@/app/validation/auth-schemas';
 import AuthCard from '@/components/auth/auth-card';
 import FormError from '@/components/form-status/form-error';
 import { Button } from '@/components/ui/button';
@@ -17,7 +16,9 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { getErrorMessageByCode } from '@/lib/handlers/generate-message';
 import { DEFAULT_AFTER_LOGIN_PAGE } from '@/lib/routes';
+import { loginValidationSchema } from '@/lib/validation/auth-schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
@@ -68,50 +69,57 @@ const LoginPage = () => {
         <Form {...formMethods}>
           <form
             onSubmit={formMethods.handleSubmit(onSubmit)}
-            className="space-y-4"
+            className="space-y-2"
           >
-            <FormField
-              disabled={isPending}
-              control={formMethods.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="bahar@example.com"
-                      type="email"
-                    />
-                  </FormControl>
-                  <FormDescription />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              disabled={isPending}
-              control={formMethods.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="Your password"
-                      type="password"
-                    />
-                  </FormControl>
-                  <FormDescription />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="space-y-4">
+              <FormField
+                disabled={isPending}
+                control={formMethods.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        disabled={isPending}
+                        placeholder="bahar@example.com"
+                        type="email"
+                      />
+                    </FormControl>
+                    <FormDescription />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                disabled={isPending}
+                control={formMethods.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        disabled={isPending}
+                        placeholder="Your password"
+                        type="password"
+                      />
+                    </FormControl>
+                    <FormDescription />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
             {errorMessage && <FormError message={errorMessage} />}
+            <div className="flex justify-end w-full">
+              <Button variant={'link'} className="pl-1 py-0" asChild>
+                <Link href="/forget-password">Forgot your password?</Link>
+              </Button>
+            </div>
 
             <Button className="w-full" size={'lg'} disabled={isPending}>
               Login

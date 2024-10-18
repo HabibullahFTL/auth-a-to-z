@@ -2,7 +2,10 @@ export const errorMessages = {
   InvalidInputs: 'Your inputs are incorrect. Please check.',
   InvalidVerificationCode: 'Invalid verification code. Please check',
   InvalidVerificationLink: 'Invalid verification link. Please check',
+  InvalidResetPasswordLink: 'Invalid reset password link.',
   ExpiredVerificationCode: 'Verification code is expired. Try resending.',
+  ExpiredResetPasswordLink:
+    'The reset password link has expired. Please request a new one.',
   ExpiredVerificationLink: 'Verification link is expired. Try resending.',
   EmailIsInUse: 'The email is already in use.',
   LoginFailed: 'Login failed. Please try again.',
@@ -10,6 +13,7 @@ export const errorMessages = {
     'Your account was created, but login failed. Please try again.',
   EmailNotVerified: 'Your email is not verified. Please check your inbox.',
   ResendVerificationFailed: 'Failed to resend verification email.',
+  ResetPasswordRequestFailed: 'Failed to send reset request.',
   InvalidCredentials: 'Invalid email or password.',
   UserBlocked: 'Your account is blocked.',
   CredentialsSignin: 'Invalid email or password.',
@@ -26,6 +30,10 @@ export const errorMessages = {
 export const successMessages = {
   EmailAlreadyVerified: 'The email is already verified.',
   EmailVerificationSent: 'Sent a verification token. Please check your inbox.',
+  ResetPasswordRequestSent:
+    'Sent a reset password token. Please check your inbox.',
+  ResetPasswordSuccess: 'Your password has been reset successfully.',
+  ValidResetPasswordLink: 'This is a valid reset password link',
   EmailVerifiedSuccess: 'Verified your email successfully.',
   SignUpSuccess: 'Your account is created. Please verify your email.',
   LoginSuccess: 'Logged in successfully!',

@@ -1,4 +1,4 @@
-import { IErrorCode } from '@/types/common';
+import { IErrorCode, ISuccessCode } from '@/types/common';
 import { errorMessages, successMessages } from './default-messages';
 
 export const getErrorMessageByCode = (
@@ -13,7 +13,7 @@ export const getErrorMessageByCode = (
 };
 
 export const getSuccessMessageByCode = (
-  code: IErrorCode,
+  code: ISuccessCode,
   fallbackMessage?: string
 ) => {
   return (

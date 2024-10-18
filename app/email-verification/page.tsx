@@ -6,8 +6,6 @@ import { redirect } from 'next/navigation';
 interface IProps {
   searchParams: {
     token?: string;
-    'error-code'?: string;
-    'success-code'?: string;
   };
 }
 

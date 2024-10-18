@@ -1,7 +1,6 @@
 'use client';
 
 import { registration } from '@/actions/registration';
-import { signUpValidationSchema } from '@/app/validation/auth-schemas';
 import AuthCard from '@/components/auth/auth-card';
 import { Button } from '@/components/ui/button';
 import {
@@ -15,6 +14,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { DEFAULT_RESEND_VERIFICATION_PAGE } from '@/lib/routes';
+import { signUpValidationSchema } from '@/lib/validation/auth-schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';

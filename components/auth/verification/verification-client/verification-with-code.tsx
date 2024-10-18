@@ -36,8 +36,8 @@ const VerificationWithCode = ({
         </div>
       </div>
       <p className="text-sm text-center text-gray-500">
-        Please check your inbox and click the link or enter the OTP below to
-        verify your email address.
+        Please check your inbox and click the verification link or enter the OTP
+        below to verify your email address.
       </p>
 
       {/* Verification handling section  */}

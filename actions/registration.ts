@@ -1,12 +1,11 @@
 'use server';
 
-import { signUpValidationSchema } from '@/app/validation/auth-schemas';
 import { PASSWORD_SALT } from '@/lib/auth/auth';
 import { db } from '@/lib/db';
-import { getErrorMessageByCode } from '@/lib/handlers/generate-message';
 import { generateResponse } from '@/lib/request/generate-response';
 import { sendVerificationEmail } from '@/lib/request/send-mails';
 import { generateVerificationToken } from '@/lib/request/verification-tokens';
+import { signUpValidationSchema } from '@/lib/validation/auth-schemas';
 import { IResponse } from '@/types/common';
 import * as bcrypt from 'bcryptjs';
 import { z } from 'zod';
@@ -36,8 +35,6 @@ export const registration = async (
 ): Promise<IResponse> => {
   const validated = signUpValidationSchema.safeParse(values);
 
-  getErrorMessageByCode('sss');
-
   // Checking given inputs are valid or not
   if (!validated?.success || !urlOrigin) {
     return generateResponse({ code: 'InvalidInputs' });
@@ -50,6 +47,7 @@ export const registration = async (
     where: { email },
   });
 
+  // Showing error of an existing user
   if (existingUser) {
     return generateResponse({ code: 'EmailIsInUse' });
   }
@@ -59,12 +57,9 @@ export const registration = async (
 
   // Creating user in database
   const user = await db.user.create({
-    data: {
-      email,
-      name,
-      password: hashedPassword,
-    },
+    data: { name, email, password: hashedPassword },
   });
+
   // If failed to generate verification token
   if (!user) {
     return generateResponse({ code: 'UnexpectedError' });

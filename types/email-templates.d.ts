@@ -7,3 +7,10 @@ export interface IVerificationEmailTemplate {
   };
   company: typeof siteConfig;
 }
+
+export interface IResetPasswordEmailTemplate {
+  verification: {
+    link: string;
+  };
+  company: typeof siteConfig;
+}
