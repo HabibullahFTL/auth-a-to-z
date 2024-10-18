@@ -26,6 +26,7 @@ export const signUpValidationSchema = z.object({
 export const loginValidationSchema = z.object({
   email: emailValidation,
   password: passwordValidation,
+  code: z.optional(z.string()),
 });
 
 // Reset password request validation schema
@@ -38,7 +39,7 @@ export const resetPasswordValidationSchema = z
   .object({
     email: emailValidation,
     password: passwordValidation,
-    confPassword: z.string(),
+    confPassword: passwordValidation,
     token: z.string().min(6, 'Token is required'),
   })
   .refine((arg) => arg.password === arg.confPassword, {

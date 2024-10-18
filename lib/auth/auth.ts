@@ -4,6 +4,7 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import NextAuth, { AuthError, DefaultSession } from 'next-auth';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { type JWT } from 'next-auth/jwt';
+import { getTwoFactorConfirmation } from '../request/two-factor-tokens';
 import { getUserById } from '../request/users';
 import { DEFAULT_LOGIN_PAGE } from '../routes';
 import authConfig from './auth.config';
@@ -15,6 +16,7 @@ declare module 'next-auth' {
   interface Session {
     user: {
       emailVerified: Date | null;
+      isTwoFactorEnabled: boolean | null;
       role: IUserRole;
     } & DefaultSession['user'];
   }
@@ -24,6 +26,7 @@ declare module 'next-auth' {
    */
   interface User {
     emailVerified: Date | null;
+    isTwoFactorEnabled?: boolean | null;
     role?: IUserRole;
     createdAt?: Date | null;
     updatedAt?: Date | null;
@@ -35,6 +38,7 @@ declare module 'next-auth/jwt' {
   interface JWT {
     role?: IUserRole;
     emailVerified: Date | null;
+    isTwoFactorEnabled: boolean | null;
   }
 }
 
@@ -59,14 +63,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     },
   },
   callbacks: {
-    signIn: async ({ user, account }) => {
-      console.log('FROM signIn() ----------> ', {
-        user,
-        account,
-      });
-
+    signIn: async ({ user }) => {
       // Throwing an error if no user found
-      if (!user) {
+      if (!user || !user?.id) {
         throw new AuthError({ cause: 'UserNotFound' });
       }
 
@@ -75,7 +74,20 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         throw new AuthError({ cause: 'UserBlocked' });
       }
 
-      // TODO: 2FA check
+      // Checking 2FA access
+      if (user?.isTwoFactorEnabled) {
+        const twoFactorConfirmation = await getTwoFactorConfirmation(user?.id);
+
+        // Checking 2FA confirmation
+        if (!twoFactorConfirmation) {
+          throw new AuthError({ cause: 'TwoFactorConfirmationMissing' });
+        }
+
+        // Removing current confirmation for next login
+        await db.twoFactorConfirmation.delete({
+          where: { id: twoFactorConfirmation.id },
+        });
+      }
 
       return true;
     },
@@ -96,6 +108,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       token.role = existingUser.role;
       token.email = existingUser.email;
       token.emailVerified = existingUser.emailVerified;
+      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
 
       // console.log('FROM jwt() ----------> ', {
       //   existingUser,
@@ -122,6 +135,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         session.user.image = token.picture || '';
         session.user.email = token.email || '';
         session.user.emailVerified = token.emailVerified;
+        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled;
       }
 
       return session;

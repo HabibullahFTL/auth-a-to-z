@@ -1,4 +1,5 @@
 import { ResetPasswordRequestEmailTemplate } from '@/email-templates/reset-password-email-template';
+import { TwoFactorTokenEmailTemplate } from '@/email-templates/two-factor-token-email-template';
 import { User } from '@prisma/client';
 import { Resend } from 'resend';
 import { v4 as uuid } from 'uuid';
@@ -14,6 +15,14 @@ interface IVerificationProps {
     code: string;
   };
 }
+
+interface I2FATokenProps {
+  user: Partial<User>;
+  verification: {
+    code: string;
+  };
+}
+
 interface IResetPasswordRequestProps {
   urlOrigin: string;
   user: Partial<User>;
@@ -85,4 +94,33 @@ export const sendResetPasswordRequestEmail = async ({
   }
 
   return generateResponse({ success: true, code: 'ResetPasswordRequestSent' });
+};
+
+export const send2FATokenEmail = async ({
+  user,
+  verification,
+}: I2FATokenProps) => {
+  const response = await resendMailService.emails.send({
+    from: `${siteConfig?.name} <${siteConfig?.fromEmail}>`,
+    replyTo: siteConfig?.email,
+    to: [user?.email || ''], // There can be pass an array of emails like ['abc@gmail.com', 'def@gmail.com'] or a single email 'abc@gmail.com
+    subject: `Your Two-Factor Authentication Code - ${siteConfig?.name}`,
+    headers: {
+      'X-Entity-Ref-ID': uuid(), // This will prevent threading in gmail though we send multiple email with same title
+    },
+    react: TwoFactorTokenEmailTemplate({
+      verification: {
+        code: verification?.code,
+      },
+      company: siteConfig,
+    }),
+  });
+
+  if (response?.error) {
+    console.log('response?.error', response?.error);
+
+    return generateResponse({ code: '2FATokenSendingFailed' });
+  }
+
+  return generateResponse({ success: true, code: '2FATokenSent' });
 };

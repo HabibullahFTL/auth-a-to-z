@@ -1,13 +1,13 @@
 'use client';
-import { ResetPasswordRequestEmailTemplate } from '@/email-templates/reset-password-email-template';
+import { TwoFactorTokenEmailTemplate } from '@/email-templates/two-factor-token-email-template';
 import siteConfig from '@/lib/data/site-configs';
 
 const TestPage = () => {
   return (
-    <ResetPasswordRequestEmailTemplate
+    <TwoFactorTokenEmailTemplate
       company={siteConfig}
       verification={{
-        link: 'https://www.habibullahftl.com',
+        code: '123456',
       }}
     />
   );

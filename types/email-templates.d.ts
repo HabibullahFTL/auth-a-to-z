@@ -14,3 +14,10 @@ export interface IResetPasswordEmailTemplate {
   };
   company: typeof siteConfig;
 }
+
+export interface I2FAEmailTemplate {
+  verification: {
+    code: string;
+  };
+  company: typeof siteConfig;
+}

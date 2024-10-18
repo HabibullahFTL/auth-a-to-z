@@ -67,8 +67,6 @@ export const generateVerificationToken = async (
   userId: string,
   email: string
 ) => {
-  console.log('userId', userId);
-
   // Retrieving an existing verification token for the email (if any)
   const existingToken = await getVerificationTokenByEmail(email);
 
