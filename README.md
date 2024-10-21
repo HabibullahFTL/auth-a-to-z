@@ -1,12 +1,19 @@
 # AUTH A TO Z
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Getting Started](#getting-started)
+- [GitHub OAuth Application](#github-oauth-application-client-id-and-secret)
+- [Google OAuth Application](#google-oauth-application-client-id-and-secret)
+
 ## Overview
 
-The **AUTH A TO Z** application is built using cutting-edge technologies like Next.js, Shadcn UI, Tailwind CSS, NextAuth.js v5, Prisma, Neon database provider, and Resend for email services. This application provides a comprehensive authentication solution with features that cover user registration, login, email verification, password management, two-factor authentication, and more.
+The **AUTH A TO Z** application is built using cutting-edge technologies like Next.js, Shadcn UI, Tailwind CSS, NextAuth.js v5, React Email, Prisma, Neon database provider, and Resend for email services. This application provides a comprehensive authentication solution with features that cover user registration, login, email verification, password management, two-factor authentication, and more.
 
 ## Features
-
-### Authentication
 
 - **Login & Sign Up (Registration)**:
 
@@ -21,32 +28,33 @@ The **AUTH A TO Z** application is built using cutting-edge technologies like Ne
   - Option to resend the verification email (Rate limited: only once every 2 minutes)
 
 - **Forgot Password**:
+
   - Password reset via a verification link sent to the user’s email
 
-### Two-Factor Authentication (2FA)
+- **2FA(Two-Factor Authentication) Implementation**:
 
-- **2FA Implementation**:
   - Enable or disable Two-Factor Authentication for enhanced account security
 
-### Role-Based Access Control (RBAC)
-
 - **User Roles**:
+
   - Assign roles such as User, Admin, and Blocked
   - Special handling for Blocked users to restrict access
 
-### User Settings
-
 - **Profile Settings**:
+
   - Change username
   - Change password
   - Change email
   - Enable or disable 2FA
 
-### Admin Page
-
 - **Admin Privileges**:
   - View a list of all users
   - Modify user roles (e.g., assign Admin or Blocked status)
+- **Nice Email Templates**:
+  - Verification email template (Sending after sign up)
+  - Reset password email template (Sending after requesting to reset password)
+  - 2FA token email template (Sending if user enable 2FA)
+  - Change email template (Same template with different props in verification email template)
 
 ## Technologies Used
 
@@ -57,12 +65,11 @@ The **AUTH A TO Z** application is built using cutting-edge technologies like Ne
 - **Prisma**: Next-generation ORM for working with databases
 - **Neon**: A serverless database provider optimized for the cloud
 - **Resend**: Email service provider for sending verification and notification emails
+- **React Email**: Design email templates using Tailwind CSS
 
 ## Getting Started
 
 To get started with this project, clone the repository and follow the installation instructions below.
-
-## Installation
 
 1. Clone the repo:
    ```bash
