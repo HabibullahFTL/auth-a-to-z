@@ -65,9 +65,15 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         });
       }
     },
+    signIn: async ({ user, account }) => {
+      await db.user.update({
+        where: { id: user?.id },
+        data: { provider: account?.provider },
+      });
+    },
   },
   callbacks: {
-    signIn: async ({ user, account }) => {
+    signIn: async ({ user }) => {
       // Throwing an error if no user found
       if (!user || !user?.id) {
         throw new AuthError({ cause: 'UserNotFound' });
@@ -92,11 +98,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           where: { id: twoFactorConfirmation.id },
         });
       }
-
-      await db.user.update({
-        where: { id: user?.id },
-        data: { provider: account?.provider },
-      });
 
       return true;
     },

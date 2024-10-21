@@ -14,6 +14,7 @@ const UserDetails = ({ title, user }: IProps) => {
     ...(user?.provider === 'credentials'
       ? [{ key: 'isTwoFactorEnabled', label: '2FA Enabled' }]
       : []),
+    { key: 'provider', label: 'Provider' },
   ];
   return (
     <div className="bg-white rounded px-3 py-5 w-full grid gap-3">
