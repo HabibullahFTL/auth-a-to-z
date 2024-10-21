@@ -47,24 +47,28 @@ const FormattedInformation = ({ user }: IProps) => {
       icon: FaUser,
       value: user?.name || '',
     },
-    {
-      key: 'email',
-      label: 'Email',
-      icon: FaEnvelope,
-      value: user?.email || '',
-    },
-    {
-      key: 'password',
-      label: 'Password',
-      icon: FaLock,
-      value: '**********',
-    },
-    {
-      key: '2FA',
-      label: 'Two Factor Authentication',
-      icon: FaUserLock,
-      value: user?.isTwoFactorEnabled || false,
-    },
+    ...(user?.provider === 'credentials'
+      ? [
+          {
+            key: 'email',
+            label: 'Email',
+            icon: FaEnvelope,
+            value: user?.email || '',
+          },
+          {
+            key: 'password',
+            label: 'Password',
+            icon: FaLock,
+            value: '**********',
+          },
+          {
+            key: '2FA',
+            label: 'Two Factor Authentication',
+            icon: FaUserLock,
+            value: user?.isTwoFactorEnabled || false,
+          },
+        ]
+      : []),
   ];
 
   // 2FA service handler

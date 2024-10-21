@@ -124,7 +124,6 @@ export const login = async (values: z.infer<typeof loginValidationSchema>) => {
           });
       }
     }
-    console.log(error);
 
     // Returning unexpected error response
     return generateResponse({ code: 'UnexpectedError' });

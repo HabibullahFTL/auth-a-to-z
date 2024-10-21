@@ -44,14 +44,11 @@ const AdminPage = () => {
 
   const userRoles: UserRole[] = ['USER', 'ADMIN', 'BLOCKED'];
 
-  console.log({ roleChangeModalData });
-
   useEffect(() => {
     const fetchUsers = async () => {
       const resPromise = await fetch(`/api/users`);
       const users = await resPromise.json();
       setResponse(users);
-      console.log({ resPromise, users });
     };
 
     startFetching(async () => {

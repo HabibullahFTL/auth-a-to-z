@@ -1,5 +1,5 @@
+import { Badge } from '@/components/ui/badge';
 import { User } from 'next-auth';
-import { Badge } from '../ui/badge';
 
 interface IProps {
   title: string;
@@ -11,7 +11,9 @@ const UserDetails = ({ title, user }: IProps) => {
     { key: 'name', label: 'Name' },
     { key: 'email', label: 'Email' },
     { key: 'role', label: 'Role' },
-    { key: 'isTwoFactorEnabled', label: '2FA Enabled' },
+    ...(user?.provider === 'credentials'
+      ? [{ key: 'isTwoFactorEnabled', label: '2FA Enabled' }]
+      : []),
   ];
   return (
     <div className="bg-white rounded px-3 py-5 w-full grid gap-3">

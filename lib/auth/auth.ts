@@ -18,6 +18,7 @@ declare module 'next-auth' {
       emailVerified: Date | null;
       isTwoFactorEnabled: boolean | null;
       role: IUserRole;
+      provider?: string | null;
     } & DefaultSession['user'];
   }
 
@@ -28,6 +29,7 @@ declare module 'next-auth' {
     emailVerified: Date | null;
     isTwoFactorEnabled?: boolean | null;
     role?: IUserRole;
+    provider?: string | null;
     createdAt?: Date | null;
     updatedAt?: Date | null;
   }
@@ -39,6 +41,7 @@ declare module 'next-auth/jwt' {
     role?: IUserRole;
     emailVerified: Date | null;
     isTwoFactorEnabled: boolean | null;
+    provider?: string | null;
   }
 }
 
@@ -46,6 +49,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(db),
   session: { strategy: 'jwt' },
   pages: {
+    error: DEFAULT_LOGIN_PAGE,
     signIn: DEFAULT_LOGIN_PAGE,
     signOut: DEFAULT_LOGIN_PAGE,
   },
@@ -63,7 +67,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     },
   },
   callbacks: {
-    signIn: async ({ user }) => {
+    signIn: async ({ user, account }) => {
       // Throwing an error if no user found
       if (!user || !user?.id) {
         throw new AuthError({ cause: 'UserNotFound' });
@@ -89,9 +93,14 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         });
       }
 
+      await db.user.update({
+        where: { id: user?.id },
+        data: { provider: account?.provider },
+      });
+
       return true;
     },
-    jwt: async ({ token }) => {
+    jwt: async ({ token, account }) => {
       // If user is not logged in
       if (!token.sub) return token;
 
@@ -109,20 +118,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       token.email = existingUser.email;
       token.emailVerified = existingUser.emailVerified;
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
-
-      // console.log('FROM jwt() ----------> ', {
-      //   existingUser,
-      //   token,
-      // });
+      token.provider = existingUser.provider;
 
       return token;
     },
     session: async ({ session, token }) => {
-      // console.log('FROM session() --------> ', {
-      //   session,
-      //   token,
-      // });
-
       if (!token) {
         session.expires = new Date()?.toISOString() as typeof session.expires;
         return session;
@@ -136,6 +136,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         session.user.email = token.email || '';
         session.user.emailVerified = token.emailVerified;
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled;
+        session.user.provider = token.provider;
       }
 
       return session;

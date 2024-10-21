@@ -3,9 +3,7 @@ import { db } from '@/lib/db';
 import { generateResponse } from '@/lib/request/generate-response';
 import { NextResponse } from 'next/server';
 
-export const GET = async (request: Request) => {
-  console.log({ request });
-
+export const GET = async () => {
   const isAdmin = await isAdminInDB();
 
   if (!isAdmin) {

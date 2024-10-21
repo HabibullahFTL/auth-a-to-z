@@ -65,8 +65,6 @@ export const sendVerificationEmail = async ({
   });
 
   if (response?.error) {
-    console.log('response?.error', response?.error);
-
     return generateResponse({ code: 'ResendVerificationFailed' });
   }
 
@@ -124,8 +122,6 @@ export const send2FATokenEmail = async ({
   });
 
   if (response?.error) {
-    console.log('response?.error', response?.error);
-
     return generateResponse({ code: '2FATokenSendingFailed' });
   }
 
