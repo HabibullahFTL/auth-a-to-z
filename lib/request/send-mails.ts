@@ -9,6 +9,7 @@ import { generateResponse } from './generate-response';
 
 interface IVerificationProps {
   urlOrigin: string;
+  type?: 'sign-up' | 'change-email';
   user: Partial<User>;
   verification: {
     token: string;
@@ -34,6 +35,7 @@ interface IResetPasswordRequestProps {
 const resendMailService = new Resend(process.env.RESEND_API_KEY);
 
 export const sendVerificationEmail = async ({
+  type = 'sign-up',
   user,
   verification,
   urlOrigin,
@@ -44,11 +46,16 @@ export const sendVerificationEmail = async ({
     from: `${siteConfig?.name} <${siteConfig?.fromEmail}>`,
     replyTo: siteConfig?.email,
     to: [user?.email || ''], // There can be pass an array of emails like ['abc@gmail.com', 'def@gmail.com'] or a single email 'abc@gmail.com
-    subject: `Verify your email address - ${siteConfig?.name}`,
+    subject: ` ${
+      type === 'change-email'
+        ? 'Verify to change email address'
+        : 'Verify your email address to sign up'
+    } - ${siteConfig?.name}`,
     headers: {
       'X-Entity-Ref-ID': uuid(), // This will prevent threading in gmail though we send multiple email with same title
     },
     react: VerificationEmailTemplate({
+      type,
       verification: {
         code: verification?.code,
         link: confirmationLink,

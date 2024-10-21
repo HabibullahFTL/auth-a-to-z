@@ -43,11 +43,6 @@ export const verifyEmail = async ({
     return generateResponse({ code: 'Unauthorized' });
   }
 
-  // If the user's given email is already verified, return a success response
-  if (session?.user?.email === email && session?.user?.emailVerified) {
-    return generateResponse({ success: true, code: 'EmailVerifiedSuccess' });
-  }
-
   // Retrieve the verification token associated with the provided email
   const verificationToken =
     type === 'code'
@@ -89,10 +84,7 @@ export const verifyEmail = async ({
     where: { id: verificationToken?.userId },
     data: {
       emailVerified: new Date(),
-      // Only updating email if user is trying to verify another email, while they are changing previous email
-      ...(session?.user?.email !== email
-        ? { email: verificationToken?.email }
-        : {}),
+      email: verificationToken?.email,
     },
   });
 

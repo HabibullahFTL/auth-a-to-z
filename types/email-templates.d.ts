@@ -1,6 +1,7 @@
 import siteConfig from '@/lib/data/site-configs';
 
 export interface IVerificationEmailTemplate {
+  type?: 'sign-up' | 'change-email';
   verification: {
     code: string;
     link: string;

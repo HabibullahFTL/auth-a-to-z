@@ -3,15 +3,8 @@
 import { registration } from '@/actions/registration';
 import AuthCard from '@/components/auth/auth-card';
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { Form } from '@/components/ui/form';
+import FormInput from '@/components/ui/form-input';
 import { useToast } from '@/hooks/use-toast';
 import { DEFAULT_RESEND_VERIFICATION_PAGE } from '@/lib/routes';
 import { signUpValidationSchema } from '@/lib/validation/auth-schemas';
@@ -77,61 +70,25 @@ const SignUpPage = () => {
             onSubmit={formMethods.handleSubmit(onSubmit)}
             className="space-y-4"
           >
-            <FormField
+            <FormInput
               disabled={isPending}
-              control={formMethods.control}
               name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="Enter you name"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Name"
+              placeholder="Enter you name"
             />
-            <FormField
+            <FormInput
               disabled={isPending}
-              control={formMethods.control}
               name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="bahar@example.com"
-                      type="email"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Email"
+              placeholder="bahar@example.com"
+              type="email"
             />
-            <FormField
+            <FormInput
               disabled={isPending}
-              control={formMethods.control}
               name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="Your password"
-                      type="password"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Password"
+              placeholder="Your password"
+              type="password"
             />
 
             <Button className="w-full" size={'lg'} disabled={isPending}>

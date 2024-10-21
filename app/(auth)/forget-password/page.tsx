@@ -4,16 +4,8 @@ import AuthCard from '@/components/auth/auth-card';
 import AuthCardTitle from '@/components/auth/auth-card-title';
 import AuthCardWrapper from '@/components/auth/auth-card-wrapper';
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { Form } from '@/components/ui/form';
+import FormInput from '@/components/ui/form-input';
 import { useToast } from '@/hooks/use-toast';
 import { DEFAULT_LOGIN_PAGE } from '@/lib/routes';
 import { resetRequestValidationSchema } from '@/lib/validation/auth-schemas';
@@ -95,25 +87,12 @@ const ForgetPage = () => {
             onSubmit={formMethods.handleSubmit(onSubmit)}
             className="space-y-4"
           >
-            <FormField
+            <FormInput
               disabled={isPending}
-              control={formMethods.control}
               name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="bahar@example.com"
-                      type="email"
-                    />
-                  </FormControl>
-                  <FormDescription />
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Email"
+              placeholder="bahar@example.com"
+              type="email"
             />
 
             <Button className="w-full" size={'lg'} disabled={isPending}>

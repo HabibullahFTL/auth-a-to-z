@@ -1,21 +1,21 @@
-import LogoutButton from '@/components/auth/logout-button';
-import { Button } from '@/components/ui/button';
-import { auth } from '@/lib/auth/auth';
-import Link from 'next/link';
+'use client';
+import Loader from '@/components/common/loader';
+import useCurrentUser from '@/hooks/use-current-user';
+import FormattedInformation from './_components/formatted-information';
 
-const SettingsPage = async () => {
-  const session = await auth();
+const SettingsPage = () => {
+  const user = useCurrentUser();
 
   return (
-    <div>
-      {JSON.stringify(session)}
-      <div>
-        <Button>
-          {' '}
-          <Link href={'/check'}> Check button</Link>
-        </Button>
-        <LogoutButton>Logout</LogoutButton>
-      </div>
+    <div className="w-full bg-white rounded px-3 py-2 flex-col flex justify-between items-center">
+      <h3 className="text-4xl text-center font-semibold mb-6 w-full">
+        ⚙️ Settings
+      </h3>
+      {!user ? (
+        <Loader type="relative" />
+      ) : (
+        <FormattedInformation user={user} />
+      )}
     </div>
   );
 };

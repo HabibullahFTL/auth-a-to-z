@@ -73,7 +73,11 @@ const FormInput = ({
                   : type || 'text'
               }
               placeholder={placeholder || ''}
-              className={errorMessage ? 'border-destructive' : ''}
+              className={cn(
+                errorMessage
+                  ? 'border-destructive focus-visible:ring-muted-foreground'
+                  : ''
+              )}
               {...{
                 ...field,
                 onChange: (e) => {

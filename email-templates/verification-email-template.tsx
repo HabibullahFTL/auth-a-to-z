@@ -12,6 +12,7 @@ import {
 } from '@react-email/components';
 
 export const VerificationEmailTemplate = ({
+  type = 'sign-up',
   verification,
   company,
 }: IVerificationEmailTemplate) => {
@@ -49,7 +50,9 @@ export const VerificationEmailTemplate = ({
                 />
               </div>
               <Heading className="text-white my-2.5 text-lg">
-                Thank You for Signing Up!
+                {type === 'sign-up'
+                  ? 'Thank You for Signing Up!'
+                  : 'Confirm Your New Email Address'}
               </Heading>
               <Heading className="text-white my-2.5 text-3xl font-semibold">
                 Verify Email Address
@@ -58,23 +61,44 @@ export const VerificationEmailTemplate = ({
 
             {/* Content Section */}
             <div className="py-4 px-6 text-gray-800 text-center">
-              <Text className="text-base leading-5 !mt-2 !mb-0">
-                To activate your account, please verify your email address. Your
-                OTP is:
-              </Text>
-              <Text className="bg-secondary text-2xl text-otp px-8 py-4 rounded-lg tracking-[12px] font-semibold mb-4 inline-block">
-                {verification?.code}
-              </Text>
+              {type === 'change-email' ? (
+                <Text className="text-base leading-5 !mt-2 !mb-0">
+                  You have requested to change your email address to this one.
+                  Please verify this new email address by clicking the link
+                  below.
+                </Text>
+              ) : (
+                <>
+                  <Text className="text-base leading-5 !mt-2 !mb-0">
+                    To activate your account, please verify your email address.
+                    Your OTP is:
+                  </Text>
+                  <Text className="bg-secondary text-2xl text-otp px-8 py-4 rounded-lg tracking-[12px] font-semibold mb-4 inline-block">
+                    {verification?.code}
+                  </Text>
 
-              <Text className="text-base leading-5 !mb-1">
-                Or, you can click the button below to verify your email:
-              </Text>
+                  <Text className="text-base leading-5 !mb-1">
+                    Or, you can click the button below to verify your email:
+                  </Text>
+                </>
+              )}
               <Button
                 href={verification?.link}
                 className="bg-button text-white py-3 px-5 no-underline rounded-md text-base mt-2"
               >
                 VERIFY YOUR EMAIL
               </Button>
+              {type === 'change-email' ? (
+                <Text className="text-base leading-5 !mb-1 mt-4">
+                  If you did not request to change your email address, please
+                  ignore this email or contact support.
+                </Text>
+              ) : (
+                <Text className="text-base leading-5 !mb-1 mt-4">
+                  If you did not request to sign up, please ignore this email or
+                  contact support.
+                </Text>
+              )}
             </div>
 
             {/* Footer Section */}

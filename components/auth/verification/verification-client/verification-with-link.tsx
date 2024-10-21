@@ -3,7 +3,7 @@ import { verifyEmail } from '@/actions/verify-email';
 import AuthCardTitle from '@/components/auth/auth-card-title';
 import { Button } from '@/components/ui/button';
 import { getErrorMessageByCode } from '@/lib/handlers/generate-message';
-import { DEFAULT_LOGIN_PAGE } from '@/lib/routes';
+import { DEFAULT_AFTER_LOGIN_PAGE, DEFAULT_LOGIN_PAGE } from '@/lib/routes';
 import { MailXIcon } from 'lucide-react';
 import Link from 'next/link';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
@@ -76,7 +76,11 @@ const VerificationWithLink = ({
           {getErrorMessageByCode(errorCode)}
         </div>
         {/* For showing Login button, if user not logged in */}
-        {!email && (
+        {email ? (
+          <Button size={'lg'} variant={'outline'} className="w-full" asChild>
+            <Link href={DEFAULT_AFTER_LOGIN_PAGE}>Back to Settings</Link>
+          </Button>
+        ) : (
           <Button size={'lg'} variant={'outline'} className="w-full" asChild>
             <Link href={DEFAULT_LOGIN_PAGE}>Back to Login</Link>
           </Button>

@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/toast';
 import { useToast } from '@/hooks/use-toast';
 import { TriangleAlertIcon } from 'lucide-react';
+import { BiLoaderAlt } from 'react-icons/bi';
 import { FaCheckCircle } from 'react-icons/fa';
 
 export function Toaster() {
@@ -25,6 +26,8 @@ export function Toaster() {
                 <ToastTitle className="flex items-center gap-x-2">
                   {props?.variant == 'default' ? (
                     <FaCheckCircle className="size-5 text-emerald-500 shrink-0" />
+                  ) : props?.variant === 'loading' ? (
+                    <BiLoaderAlt className="size-5 text-gray-900 animate-spin shrink-0" />
                   ) : (
                     <TriangleAlertIcon className="size-5 shrink-0" />
                   )}{' '}

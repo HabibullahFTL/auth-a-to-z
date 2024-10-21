@@ -6,8 +6,8 @@ import AuthCardTitle from '@/components/auth/auth-card-title';
 import Hint from '@/components/common/hint';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { useResendCoolDown } from '@/hooks/use-resend-cooldown';
 import { useToast } from '@/hooks/use-toast';
-import { useResendCoolDown } from '@/hooks/useResendCooldown';
 import { getSuccessMessageByCode } from '@/lib/handlers/generate-message';
 import { DEFAULT_AFTER_LOGIN_PAGE, DEFAULT_LOGIN_PAGE } from '@/lib/routes';
 import { cn } from '@/lib/utils';
@@ -117,7 +117,11 @@ const VerificationClient = ({ email, token }: IProps) => {
         </div>
 
         {/* For showing Login button, if user not logged in  */}
-        {!email && (
+        {email ? (
+          <Button size={'lg'} variant={'outline'} className="w-full" asChild>
+            <Link href={DEFAULT_AFTER_LOGIN_PAGE}>Back to Settings</Link>
+          </Button>
+        ) : (
           <Button size={'lg'} variant={'outline'} className="w-full" asChild>
             <Link href={DEFAULT_LOGIN_PAGE}>Back to Login</Link>
           </Button>

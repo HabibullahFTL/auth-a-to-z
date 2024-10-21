@@ -3,6 +3,7 @@ export const errorMessages = {
   InvalidInputs: 'Your inputs are incorrect. Please check.',
   UnexpectedError: 'An unexpected error occurred. Please try again later.',
   Unauthorized: 'You are not authorized.',
+  UpdatingFailed: 'Failed to update. Please try again.',
 
   // Sign up
   EmailIsInUse: 'The email is already in use.',
@@ -41,11 +42,15 @@ export const errorMessages = {
   ExpiredResetPasswordLink:
     'The reset password link has expired. Please request a new one.',
   ResetPasswordRequestFailed: 'Failed to send reset request.',
+
+  // Change password
+  InvalidCurrentPassword: 'Your current password is incorrect.',
 } as const; // Marking it as `const` to infer literal types
 
 export const successMessages = {
   // Common
   DefaultSuccess: 'Successfully executed the request!',
+  UpdatedSuccessfully: 'Updated your data successfully.',
 
   // Sign up
   SignUpSuccess: 'Your account is created. Please verify your email.',

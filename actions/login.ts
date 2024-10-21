@@ -31,8 +31,13 @@ export const login = async (values: z.infer<typeof loginValidationSchema>) => {
     const existingUser = await getUserByEmail(email);
 
     // Returning error if user not found
-    if (!existingUser || !existingUser?.id || !existingUser?.password) {
+    if (!existingUser || !existingUser?.id) {
       return generateResponse({ code: 'UserNotFound' });
+    }
+
+    // Returning error if user has no password
+    if (!existingUser?.password) {
+      return generateResponse({ code: 'OAuthAccountNotLinked' });
     }
 
     // If user has enabled 2FA, executing 2FA process
