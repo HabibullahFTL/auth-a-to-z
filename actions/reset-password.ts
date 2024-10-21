@@ -38,6 +38,10 @@ export const resetPasswordRequest = async (
     return generateResponse({ code: 'UserNotFound' });
   }
 
+  if (existingUser?.email && !existingUser?.password) {
+    return generateResponse({ code: 'OAuthUserResetPasswordFailed' });
+  }
+
   const resetToken = await generateResetToken(existingUser?.id, email);
   // If failed to generate reset password token
   if (!resetToken) {

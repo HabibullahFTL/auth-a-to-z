@@ -38,6 +38,8 @@ export const errorMessages = {
   Expired2FACode: 'Expired 2FA code. Please try again login.',
 
   // Reset Password
+  OAuthUserResetPasswordFailed:
+    'This email is associated with a social login account. Password reset is not allowed.',
   InvalidResetPasswordLink: 'Invalid reset password link.',
   ExpiredResetPasswordLink:
     'The reset password link has expired. Please request a new one.',
