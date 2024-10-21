@@ -1,8 +1,6 @@
 import AuthCardTitle from '@/components/auth/auth-card-title';
-import { Button } from '@/components/ui/button';
 import { MailIcon } from 'lucide-react';
 import { Dispatch, SetStateAction } from 'react';
-import { FaRegEdit } from 'react-icons/fa';
 import VerificationCodeInput from './verification-code-input';
 
 interface IProps {
@@ -29,9 +27,6 @@ const VerificationWithCode = ({
           </AuthCardTitle>
           <div className="text-base flex items-center justify-center font-semibold">
             {email}
-            <Button variant={'link'} className="px-2">
-              <FaRegEdit />
-            </Button>
           </div>
         </div>
       </div>

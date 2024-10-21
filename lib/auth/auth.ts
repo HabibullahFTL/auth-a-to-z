@@ -100,7 +100,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
       return true;
     },
-    jwt: async ({ token, account }) => {
+    jwt: async ({ token }) => {
       // If user is not logged in
       if (!token.sub) return token;
 

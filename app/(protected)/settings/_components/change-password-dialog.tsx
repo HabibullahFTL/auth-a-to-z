@@ -12,7 +12,6 @@ import { useToast } from '@/hooks/use-toast';
 import { changePasswordSchema } from '@/lib/validation/user-settings';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DialogDescription } from '@radix-ui/react-dialog';
-import { useSession } from 'next-auth/react';
 import { useTransition } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -23,7 +22,6 @@ interface IProps {
 }
 
 const ChangePasswordDialog = ({ isOpen, onClose }: IProps) => {
-  const { update } = useSession();
   const { toast } = useToast();
 
   const [isChanging, startChanging] = useTransition();

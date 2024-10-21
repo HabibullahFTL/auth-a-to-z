@@ -1,3 +1,100 @@
+# AUTH A TO Z
+
+## Overview
+
+The **AUTH A TO Z** application is built using cutting-edge technologies like Next.js, Shadcn UI, Tailwind CSS, NextAuth.js v5, Prisma, Neon database provider, and Resend for email services. This application provides a comprehensive authentication solution with features that cover user registration, login, email verification, password management, two-factor authentication, and more.
+
+## Features
+
+### Authentication
+
+- **Login & Sign Up (Registration)**:
+
+  - Credential-based authentication (Email & Password)
+  - Social login using Google
+  - Social login using GitHub
+
+- **Email Verification for Credential Provider**:
+
+  - Verify via OTP (One-Time Password)
+  - Verify via a secure verification link
+  - Option to resend the verification email (Rate limited: only once every 2 minutes)
+
+- **Forgot Password**:
+  - Password reset via a verification link sent to the user’s email
+
+### Two-Factor Authentication (2FA)
+
+- **2FA Implementation**:
+  - Enable or disable Two-Factor Authentication for enhanced account security
+
+### Role-Based Access Control (RBAC)
+
+- **User Roles**:
+  - Assign roles such as User, Admin, and Blocked
+  - Special handling for Blocked users to restrict access
+
+### User Settings
+
+- **Profile Settings**:
+  - Change username
+  - Change password
+  - Change email
+  - Enable or disable 2FA
+
+### Admin Page
+
+- **Admin Privileges**:
+  - View a list of all users
+  - Modify user roles (e.g., assign Admin or Blocked status)
+
+## Technologies Used
+
+- **Next.js**: A powerful React framework for building web applications
+- **Shadcn UI**: A customizable UI component library
+- **Tailwind CSS**: Utility-first CSS framework for styling
+- **NextAuth.js v5**: Authentication for Next.js applications
+- **Prisma**: Next-generation ORM for working with databases
+- **Neon**: A serverless database provider optimized for the cloud
+- **Resend**: Email service provider for sending verification and notification emails
+
+## Getting Started
+
+To get started with this project, clone the repository and follow the installation instructions below.
+
+## Installation
+
+1. Clone the repo:
+   ```bash
+      git clone https://github.com/HabibullahFTL/auth-a-to-z.git
+   ```
+2. Install dependencies:
+   ```bash
+      yarn install
+   ```
+3. Configure environment variables:
+   Add your database connection string, Resend API key, and any other necessary secrets. For configuration guide of google & github provider see below instructions.
+
+   ```javascript
+      DATABASE_URL=
+
+      # Next Auth (Auth.js) environment variables
+      AUTH_SECRET=
+
+      AUTH_GITHUB_ID=
+      AUTH_GITHUB_SECRET=
+
+      AUTH_GOOGLE_ID=
+      AUTH_GOOGLE_SECRET=
+
+      RESEND_API_KEY=
+   ```
+
+4. Run the application
+   ```bash
+      yarn dev
+   ```
+
 ## GitHub OAuth Application (Client ID and Secret)
 
 To enable GitHub OAuth authentication for your application, you need to create a GitHub OAuth app to obtain a **Client ID** and **Client Secret**.
